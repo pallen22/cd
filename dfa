@@ -1,29 +1,32 @@
-#include<stdio.h>
-#include<conio.h>
-int main()
-{
-intn,i,count=0,count1=0,a[10];
-printf(“Enter size of string:”);
-scanf(“%d”,&n);
-printf(“Enter string:”);
-for(i=0;i<n;i++)
-{
-scanf(“%d”,&a[i]);
-if(a[i]==0)
-count++;
-else
-count1++;
+#include <stdio.h>
+#include <string.h>
 
-}
-if((count%2)==0 && (count1%2)==0)
-printf(“String accepted, Because it contains even 0’s and even 1’s”);
-else if((count%2)==0 && (count1%2)!=0)
-
-printf(“String is not accepted, because it contains even 0’s and odd 1’s”);
-else if((count%2)!=0 && (count1%2)==0)
-printf(“String is not accepted, because it contains odd 0’s and even 1’s”);
-else
-printf(“String is not accepted, because it contains odd 0’s and odd 1’s”);
-getch();
-return 0;
+int main() {
+    char str[100];
+    printf("Enter the string over the alphabets (a, b, c): ");
+    scanf("%s", str);
+    int q = 0, prev_q;
+    for (int i = 0; i < strlen(str); i++) {
+        if(str[i]!='a' && str[i]!='b' && str[i]!='c'){
+            printf("Invalid string!!\nString is not accepted.\n");
+            return 0;
+        }
+        prev_q = q;
+        switch(q) {
+            case 0 : q = (str[i] == 'a') ? 1 : 0;
+                     break;
+            case 1 : q = (str[i] == 'b') ? 2 : (str[i] == 'a') ? 1 : 0;
+                     break;
+            case 2 : q = (str[i] == 'c') ? 3 : (str[i] == 'a') ? 1 : 0;
+                     break;
+            case 3 : q = (str[i] == 'a') ? 1 : 0;
+                     break;
+        }
+        printf("%c : q%d-->q%d\n", str[i], prev_q, q);
+    }
+    if (q == 3)
+        printf("Given string reached final state q3, so it is Accepted.\n");
+    else
+        printf("Given string is in state q%d, so it is not accepted.\n",q);
+    return 0;
 }
